@@ -7,12 +7,14 @@ FROM_EMAIL = "christinaandfredding@gmail.com"
 
 
 def send_invite(user):
-    tmp = get_template("email_template")
+    tmp = get_template("email_template.html")
     params = utils.get_query_string(user)
     content = tmp.render(dict(user=user, params=params))
     send_mail(
         SUBJECT,
-        content,
+        "please come to our wedding",
+        'christinaandfredding@gmail.com',
         [user.email],
-        fail_silently=False
+        fail_silently=False,
+        html_message=content
     )
