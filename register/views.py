@@ -1,7 +1,6 @@
 import json
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
-from django.contrib.auth.models import User
 from rest_framework.renderers import JSONRenderer
 from django.contrib.auth.mixins import LoginRequiredMixin
 from register import serializers
@@ -16,7 +15,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
-        ctx["user"] = User.objects.first()
+        ctx["user"] = self.request.user
         ctx["details"] = JSONRenderer().render(
             serializers.InvitationDetailsSerializer(
                 ctx["user"].invitation_details,
