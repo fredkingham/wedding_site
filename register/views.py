@@ -1,11 +1,17 @@
 import json
-from django.views.generic import TemplateView
+from django.urls import reverse
+from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.models import User
 from rest_framework.renderers import JSONRenderer
+from django.contrib.auth.mixins import LoginRequiredMixin
 from register import serializers
 
 
-class HomeView(TemplateView):
+class Login(RedirectView):
+    url = reverse("home")
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "home.html"
 
     def get_context_data(self, *args, **kwargs):

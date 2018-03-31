@@ -58,4 +58,5 @@ class InvitationDetails(models.Model):
 
 @receiver(post_save, sender=User)
 def my_callback(sender, instance, *args, **kwargs):
-    InvitationDetails.objects.create(user=instance)
+    if not InvitationDetails.objects.filter(user=instance).exists():
+        InvitationDetails.objects.create(user=instance)
