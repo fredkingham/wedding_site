@@ -4,8 +4,8 @@ from register import views
 from register import api
 
 urlpatterns = [
-    path('login/', views.Login.as_view(), name="login"),
     path('logout/', auth_views.logout, name='logout'),
     path('', views.HomeView.as_view(), name="home"),
+    path('login/', views.Login.as_view(), name="login"),
     path('api/', include(api.router.urls)),
 ]

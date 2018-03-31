@@ -1,5 +1,5 @@
 import json
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, RedirectView
 from django.contrib.auth.models import User
 from rest_framework.renderers import JSONRenderer
@@ -8,7 +8,7 @@ from register import serializers
 
 
 class Login(RedirectView):
-    url = reverse("home")
+    url = reverse_lazy("home")
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
