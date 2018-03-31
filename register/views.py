@@ -17,5 +17,5 @@ class HomeView(TemplateView):
                 context={'request': self.request}
             ).data,
         )
-        ctx["details"] = json.dumps(json.loads(ctx["details"]))
+        ctx["details"] = json.dumps(json.loads(ctx["details"].decode('utf-8')))
         return ctx
