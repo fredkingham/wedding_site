@@ -126,7 +126,7 @@
 
       var Person = function(someJson){
         this.id = someJson.id;
-        this.visited = someJson.visited;
+        this.visited = someJson.rsvp_choice !== undefined && someJson.rsvp_choice !== null;
         this.foodChoice = someJson.food_choice;
         this.rsvpChoice = someJson.rsvp_choice;
         this.favouriteSong = someJson.favouriteSong;
