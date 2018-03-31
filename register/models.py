@@ -20,6 +20,7 @@ class InvitationDetails(models.Model):
         default="",
         choices=FOOD_CHOICES
     )
+    invite_sent = models.DateTimeField(blank=True, null=True)
     rsvp_choice = models.NullBooleanField()
     visited = models.BooleanField(
         default=False
