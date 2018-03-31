@@ -136,3 +136,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'register', 'static'),
 )
+
+
+if 'test' not in sys.argv:
+    try:
+        from wedding_site.local_settings import *
+    except ImportError:
+        pass
