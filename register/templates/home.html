@@ -1,5 +1,5 @@
-{% load staticfiles %}
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block contents %}
   <div id="vue-container" class="ui inverted vertical masthead center aligned segment wedding-container">
     <div v-bind:class="{loading : person.saving || (person.plusOne && person.plusOne.saving) ||  person.saved || (person.plusOne && person.plusOne.saved)}" class="loading-space">
