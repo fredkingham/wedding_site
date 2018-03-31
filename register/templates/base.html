@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<html class="pushable">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static "semantic/dist/semantic.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/styles.css" %}">
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="{% static "semantic/dist/semantic.min.js" %}"></script>
+  </head>
+  <body class="inversion">
+    <div class="ui inverted vertical masthead center aligned segment">
+      <div class="ui container">
+        <div class="ui large secondary inverted pointing menu">
+          <div class="right item">
+            <a class="ui inverted button" href="">Log out Dave</a>
+          </div>
+        </div>
+        <img class="main-img" src="{% static "img/ck_and_fk.jpg" %}" />
+        <h1 class="ui inverted header main-header">
+          Fred and Christina's Wedding
+        </h1>
+        <h1 class="ui inverted header main-header2">
+          1/9/18
+        </h1>
+      </div>
+      <div class="button-container">
+        <button class="ui left huge blue basic button fixed button-container">I would love to come</button>
+      </div>
+      <div class="button-container">
+        <button class="right grey huge basic ui button fixed button-container">sorry I can't make it</button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+application_name: wedding_site
+PROJECT_PATH: "/home/ubuntu/wedding_site"
+VIRTUALENV_PATH: "/home/ubuntu/.virtualenvs/wedding_site"
+
+REQUIREMENTS_FILE: "{{ PROJECT_PATH }}/requirements.txt"
+LOG_DIR: "{{ PROJECT_PATH }}/log"
+
+GIT_REPO: "https://github.com/nhsengland/{{ application_name }}.git"
+GIT_BRANCH: master
+
+
+CONFIG_DIR: "{{ PROJECT_PATH }}/deployment/config"
