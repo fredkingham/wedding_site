@@ -15,7 +15,7 @@ def send_invite(user):
     send_mail(
         SUBJECT,
         "please come to our wedding",
-        'christinaandfredding@gmail.com',
+        'Christina & Fred',
         [user.email],
         fail_silently=False,
         html_message=content
