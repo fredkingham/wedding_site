@@ -103,4 +103,15 @@ button.button-container:hover {
 .loading-space.loading {
   opacity: 1; }
 
+.top-bar {
+  margin-top: -50px;
+  margin-bottom: 70px; }
+
+@media only screen and (max-width: 767px) {
+  .top-bar {
+    margin-bottom: 0px; } }
+@media only screen and (max-width: 767px) {
+  .main-header {
+    margin-bottom: 40px; } }
+
 /*# sourceMappingURL=styles.css.map */
