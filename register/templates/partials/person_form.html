@@ -5,7 +5,7 @@
         <h1 style="padding-top: 0" class="ui inverted header main-header">
           Hello [[ person.user.first_name ]]!
           <small>
-            <a v-if="person.plusOne" class="header-link" href="">(not me)</a>
+            <a v-if="person.plusOne" class="header-link" href="{% url 'auth_logout' %}">(not me)</a>
           </small>
         </h1>
       </div>
