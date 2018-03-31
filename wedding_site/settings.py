@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'sesame.middleware.AuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'wedding_site.urls'
@@ -137,6 +138,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'register', 'static'),
 )
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'sesame.backends.ModelBackend'
+]
 
 
 if 'test' not in sys.argv:
