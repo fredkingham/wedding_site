@@ -12,6 +12,7 @@ def send_invite(user):
     params = utils.get_query_string(user)
     content = tmp.render(dict(user=user, params=params))
     user.invite_sent = timezone.now()
+    user.save()
     send_mail(
         SUBJECT,
         "please come to our wedding",
