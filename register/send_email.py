@@ -11,7 +11,8 @@ def send_invite(user):
     tmp = get_template("email_template.html")
     params = utils.get_query_string(user)
     content = tmp.render(dict(user=user, params=params))
-    user.invite_sent = timezone.now()
+    id = user.invitation_details
+    id.invite_sent = timezone.now()
     user.save()
     send_mail(
         SUBJECT,
