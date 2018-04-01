@@ -37,7 +37,6 @@ class InvitationDetails(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        parent_link=True,
         related_name="plus_one_invitation_details"
     )
 
