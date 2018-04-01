@@ -37,7 +37,7 @@
         <div class="row">
           <div class="column four wide"></div>
           <div class="column eight wide">
-            <div v-if="person.plusOne" class="ui inverted vertical segment">
+            <div v-if="person.plusOne && person.rsvpChoice !== RSVP_CHOICES.NO" class="ui inverted vertical segment">
               <h3 class="sub-header">
                 Would you like to RSVP for [[ person.plusOne.user.first_name ]]?
               </h3>
@@ -143,7 +143,7 @@
         }
       }
 
-      var Person = function(someJson){
+      var Person = function(someJson, primary){
         this.id = someJson.id;
         this.visited = someJson.rsvp_choice !== undefined && someJson.rsvp_choice !== null;
         this.foodChoice = someJson.food_choice;
@@ -154,22 +154,35 @@
         this.showOther = null;
         this.saving = false;
         this.saved = false;
+        this.complete = false;
+        this.primary = primary;
+        this.songChosen = false;
         if(someJson.plus_one){
           this.plusOne = new Person(someJson.plus_one);
         }
         else{
           this.plusOne = null;
         }
+        this.isCompleted();
+        this.isSongChosen();
       }
 
       Person.prototype = {
-        rsvp: function(rsvpChoice){
-          this.state = "Food";
-          this.rsvpChoice = rsvpChoice;
-          this.save();
+        isCompleted: function(){
+          this.complete = this.rsvpChoice && this.songChoice && this.foodChoice;
+        },
+        isSongChosen: function(){
+          this.songChosen = !!(this.songChoice && this.songChoice.length);
+        },
+        reset: function(){
+          this.songChoice = "";
+          this.foodChoice = "";
+          this.foodPreferenceOther = "";
         },
         save: function(){
-          $('.shape').shape('flip over');
+          if(this.rsvpChoice === CONSTANTS.RSVP_CHOICES.NO){
+            this.reset();
+          }
           var data = {
             visited: this.visited,
             food_choice: this.foodChoice,
@@ -180,6 +193,8 @@
           }
           this.saving = true;
           var self = this;
+          this.isSongChosen();
+
           $.ajax({
             url: '/api/invitationdetails/' + self.id + "/",
             type: 'PUT',
@@ -189,22 +204,12 @@
             success: function(data) {
               self.saving = false;
               self.saved = true;
+              self.isCompleted();
               setTimeout(function(){
                 self.saved = false;
               }, 2000)
             }
           });
-        },
-        changeState: function(){
-          if(this.rsvpChoice === null){
-            this.state = CONSTANTS.STATE_CHOICES.LANDING;
-          }
-          else if(!this.foodChoice){
-            this.state = CONSTANTS.STATE_CHOICES.FOOD;
-          }
-          else if(!this.songChoice || !this.songChoice.length){
-            this.state = CONSTANTS.STATE_CHOICES
-          }
         },
         set: function(someField, someValue){
           this[someField] = someValue;
@@ -239,7 +244,7 @@
         delimiters: ['[[', ']]'],
         data: function(){
           var constants = JSON.parse(JSON.stringify(CONSTANTS));
-          constants.person = new Person({{ details | safe }});
+          constants.person = new Person({{ details | safe }}, true);
           return constants;
         }
       });
