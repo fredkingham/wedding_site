@@ -13,7 +13,7 @@ def send_invite(user):
     content = tmp.render(dict(user=user, params=params))
     id = user.invitation_details
     id.invite_sent = timezone.now()
-    user.save()
+    id.save()
     send_mail(
         SUBJECT,
         "please come to our wedding",
