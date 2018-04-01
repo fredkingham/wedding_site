@@ -73,9 +73,21 @@
         </h3>
       </div>
       <div class="second-page flex-container">
-        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.PIG)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.PIG }" class="third ui grey basic button ncdr-button">I like pig</button>
-        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.VEGGIE)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.VEGGIE }" class="third grey basic ui button ncdr-button">I'd prefer something veggie</button>
-        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.OTHER)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.OTHER }" class="third grey basic ui button ncdr-button">I'm special...</button>
+        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.PIG)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.PIG }" class="third ui grey basic button ncdr-button">
+          <span v-if="person.primary">I</span>
+          <span v-if="!person.primary">They</span>
+          like pig
+      </button>
+        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.VEGGIE)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.VEGGIE }" class="third grey basic ui button ncdr-button">
+          <span v-if="person.primary">I'd</span>
+          <span v-if="!person.primary">They'd</span>
+          prefer something veggie
+        </button>
+        <button v-on:click="person.set('foodChoice', FOOD_CHOICES.OTHER)" v-bind:class="{ blue: person.foodChoice === FOOD_CHOICES.OTHER }" class="third grey basic ui button ncdr-button">
+          <span v-if="person.primary">I'm</span>
+          <span v-if="!person.primary">They're</span>
+          special...
+        </button>
       </div>
       <div class="second-page flex-container">
         <div class="third">
