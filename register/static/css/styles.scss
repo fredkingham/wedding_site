@@ -149,6 +149,8 @@ button.button-container:hover{
   opacity: 1;
 }
 
+[v-cloak] { display: none; }
+
 .top-bar{
   margin-top: -50px;
   margin-bottom: 70px;
