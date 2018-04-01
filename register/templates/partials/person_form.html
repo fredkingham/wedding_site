@@ -94,13 +94,22 @@
           <small v-if="person.foodChoice=='pig'">Mmmm pig</small>
         </div>
         <div class="third">
-          <small v-if="person.foodChoice=='veggie'">Most of your five a day</small>
+          <small v-if="person.foodChoice=='veggie'">Most of
+            <span v-if="person.primary">your</span>
+            <span v-if="!person.primary">their</span>
+            five a day
+          </small>
         </div>
         <div class="third"></div>
       </div>
       <div v-if="person.foodChoice === FOOD_CHOICES.OTHER" style="margin-top: 10px; text-align: left; " class="row">
         <div class="ui form inverted transparent ncdr-input">
-          <label style="display: block; margin-bottom: 5px;">Tell us more about your exciting dietary requirements</label>
+          <label style="display: block; margin-bottom: 5px;">
+            Tell us more about
+            <span v-if="person.primary">your</span>
+            <span v-if="!person.primary">their</span>
+            exciting dietary requirements
+          </label>
           <textarea v-on:blur="person.save()" v-model="person.foodPreferenceOther" v-bind:class="{ blue: person.foodPreferenceOther.length }" rows=3></textarea>
         </div>
       </div>
