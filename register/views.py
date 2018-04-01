@@ -1,5 +1,6 @@
 import json
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
 from django.views.generic import TemplateView, RedirectView
 from rest_framework.renderers import JSONRenderer
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +9,10 @@ from register import serializers
 
 class Login(RedirectView):
     url = reverse_lazy("home")
+
+    def get(self, *args, **kwargs):
+        logout(self.request)
+        return super().get(*args, **kwargs)
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
