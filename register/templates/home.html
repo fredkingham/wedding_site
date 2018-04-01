@@ -44,7 +44,7 @@
 
               <div class="second-page flex-container">
                 <button v-bind:class="{ blue: person.showOther }" v-on:click="person.showOther = true" class="half ui grey basic button fixed button-container">Oo yes please</button>
-                <button v-bind:class="{ blue: person.showOther===false }" v-on:click="person.showOther = false" class="half ui grey basic button fixed button-container">Nah they can do it themeselves</button>
+                <button v-bind:class="{ blue: person.showOther===false }" v-on:click="person.showOther = false" class="half ui grey basic button fixed button-container">Nah they can do it themselves</button>
               </div>
             </div>
           </div>
@@ -79,10 +79,10 @@
         <img class="main-img" src="{% static "img/ck_and_fk.jpg" %}" />
       </div>
       <div class="button-container">
-        <button v-on:click="person.set('rsvpChoice', RSVP_CHOICES.YES)" class="ui grey left huge basic button fixed button-container">I would love to come</button>
+        <button v-on:click="person.rsvp(RSVP_CHOICES.YES)" class="ui grey left huge basic button fixed button-container">I would love to come</button>
       </div>
       <div class="button-container">
-        <button v-on:click="person.set('rsvpChoice', RSVP_CHOICES.NO)" class="right grey huge basic ui button fixed button-container">Sorry, I can't make it</button>
+        <button v-on:click="person.rsvp(RSVP_CHOICES.NO)" class="right grey huge basic ui button fixed button-container">Sorry, I can't make it</button>
       </div>
     </div>
   </script>
@@ -170,6 +170,11 @@
       Person.prototype = {
         isCompleted: function(){
           this.complete = this.rsvpChoice && this.songChoice && this.foodChoice;
+        },
+        rsvp: function(someVal){
+          $(window).scrollTop(0);
+          $("body").scrollTop(0);
+          this.set('rsvpChoice', someVal);
         },
         isSongChosen: function(){
           this.songChosen = !!(this.songChoice && this.songChoice.length);
