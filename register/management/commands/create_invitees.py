@@ -27,6 +27,7 @@ def process_row(csv_row):
     )
     user.first_name = csv_row[FIRST_NAME].strip()
     user.last_name = csv_row[SECOND_NAME].strip()
+    user.save()
 
     plus_one = csv_row.get(PLUS_ONE, "").strip()
     if plus_one and not plus_one == "???" and not plus_one == "????":

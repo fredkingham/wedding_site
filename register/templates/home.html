@@ -5,8 +5,8 @@
     <div v-bind:class="{loading : person.saving || (person.plusOne && person.plusOne.saving) ||  person.saved || (person.plusOne && person.plusOne.saved)}" class="loading-space">
       <div>
         <div v-if="person.saving || (person.plusOne && person.plusOne.saving)" class="ui active inverted loader"></div>
-        <div v-if="person.saved || (person.plusOne && person.plusOne.saved)" style="margin-top: -21px; color: white;">
-          <p style="font-size: 30px;">
+        <div class="header-tick" v-if="person.saved || (person.plusOne && person.plusOne.saved)">
+          <p>
             &#10003;
           </p>
           saved
@@ -33,11 +33,30 @@
           </div>
           <person-form v-bind:person="person"></person-form>
         </div>
+
+        <div class="row">
+          <div class="column four wide"></div>
+          <div class="column eight wide">
+            <div v-if="person.plusOne" class="ui inverted vertical segment">
+              <h3 class="sub-header">
+                Would you like to RSVP for [[ person.plusOne.user.first_name ]]?
+              </h3>
+
+              <div class="second-page flex-container">
+                <button v-bind:class="{ blue: person.showOther }" v-on:click="person.showOther = true" class="half ui grey basic button fixed button-container">Oo yes please</button>
+                <button v-bind:class="{ blue: person.showOther===false }" v-on:click="person.showOther = false" class="half ui grey basic button fixed button-container">Nah they can do it themeselves</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
         <div v-if="person.showOther" class="row">
           <div class="column one wide"></div>
           <person-form v-bind:person="person.plusOne"></person-form>
           <div class="column six wide">
-            <img class="second-page" src="{% static "img/fred-kisses-ck.jpeg" %}" />
+            <img class="second-page" src="{% static "img/fred_and_ck_dance.JPG" %}" />
           </div>
         </div>
       </div>
@@ -129,11 +148,10 @@
         this.visited = someJson.rsvp_choice !== undefined && someJson.rsvp_choice !== null;
         this.foodChoice = someJson.food_choice;
         this.rsvpChoice = someJson.rsvp_choice;
-        this.favouriteSong = someJson.favouriteSong;
-        this.foodPreferenceOther = someJson.food_Preference_other || "";
+        this.foodPreferenceOther = someJson.food_preference_other || "";
         this.songChoice = someJson.song_choice || "";
         this.user = someJson.user;
-        this.showOther = false;
+        this.showOther = null;
         this.saving = false;
         this.saved = false;
         if(someJson.plus_one){
@@ -151,13 +169,14 @@
           this.save();
         },
         save: function(){
+          $('.shape').shape('flip over');
           var data = {
             visited: this.visited,
             food_choice: this.foodChoice,
             rsvp_choice: this.rsvpChoice,
             favourite_song: this.favouriteSong,
             song_choice: this.songChoice,
-            food_Preference_other: this.foodPreferenceOther
+            food_preference_other: this.foodPreferenceOther
           }
           this.saving = true;
           var self = this;
