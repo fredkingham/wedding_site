@@ -1,15 +1,15 @@
 <div class="column eight wide">
   <div style="padding-top: 0" class="ui inverted vertical segment">
     <div class="row">
-      <div v-if="person.plusOne">
+      <div v-if="person.primary">
         <h1 style="padding-top: 0" class="ui inverted header main-header">
           Hello [[ person.user.first_name ]]!
           <small>
-            <a v-if="person.plusOne" class="header-link" href="{% url 'logout' %}">(not me)</a>
+            <a v-if="person.primary" class="header-link" href="{% url 'logout' %}">(not me)</a>
           </small>
         </h1>
       </div>
-      <div v-if="!person.plusOne">
+      <div v-if="!person.primary">
         <h1 style="padding-top: 0" class="ui inverted header main-header">
           [[ person.user.first_name ]]'s invitation
         </h1>
@@ -21,8 +21,17 @@
       </h3>
     </div>
     <div class="second-page flex-container">
-      <button v-bind:class="{ blue: person.rsvpChoice === RSVP_CHOICES.YES }" v-on:click="person.set('rsvpChoice', RSVP_CHOICES.YES)" class="half ui grey basic button fixed button-container">I would love to come</button>
-      <button v-bind:class="{ blue: person.rsvpChoice === RSVP_CHOICES.NO }" v-on:click="person.set('rsvpChoice', RSVP_CHOICES.NO)" class="half grey basic ui button fixed button-container">Sorry, I can't make it</button>
+      <button v-bind:class="{ blue: person.rsvpChoice === RSVP_CHOICES.YES }" v-on:click="person.set('rsvpChoice', RSVP_CHOICES.YES)" class="half ui grey basic button fixed button-container">
+        <span v-if="person.primary">I would</span>
+        <span v-if="!person.primary">They'd</span>
+        love to come
+      </button>
+      <button v-bind:class="{ blue: person.rsvpChoice === RSVP_CHOICES.NO }" v-on:click="person.set('rsvpChoice', RSVP_CHOICES.NO)" class="half grey basic ui button fixed button-container">
+        Sorry,
+        <span v-if="person.primary">I</span>
+<span v-if="!person.primary">they</span>
+        can't make it
+      </button>
     </div>
     <div class="second-page flex-container">
       <div class="half">
@@ -31,7 +40,30 @@
     </div>
   </div>
   <div v-if="person.rsvpChoice === RSVP_CHOICES.NO">
-    That's a shame. Please email us to arrange a meet-up ASAP.
+    <span v-if="person.plusOne">
+      <h3 style="text-align: left" class="sub-header">
+      That's a shame.<br />
+      Would you like to RSVP for [[ person.plusOne.user.first_name ]] too?
+      </h3>
+      <div class="second-page flex-container">
+        <button v-bind:class="{ blue: person.showOther }" v-on:click="person.showOther = true" class="half ui grey basic button fixed button-container">Oo yes please</button>
+        <button v-bind:class="{ blue: person.showOther===false }" v-on:click="person.showOther = false" class="half ui grey basic button fixed button-container">Nah they can do it themeselves</button>
+      </div>
+      <div class="second-page flex-container">
+        <div class="half">
+          <small v-if="person.showOther">Ok cool, scroll down</small>
+        </div>
+      </div>
+    </span>
+    <span v-if="!person.plusOne">
+      That's a shame.
+      <span v-if="person.primary">
+       Please email us to arrange a meet-up ASAP.
+      </span>
+      <span v-if="!person.primary">
+       Please get them to email us to arrange a meet-up ASAP.
+      </span>
+    </span>
   </div>
   <div v-if="person.rsvpChoice === RSVP_CHOICES.YES">
     <div class="ui inverted vertical segment">
@@ -66,8 +98,8 @@
         <h3 class="sub-header">
           <div>Song choice</div>
           <small>Name a track that will make
-            <span v-if="person.plusOne">you</span>
-            <span v-if="!person.plusOne">[[ person.user.first_name ]]</span>
+            <span v-if="person.primary">you</span>
+            <span v-if="!person.primary">[[ person.user.first_name ]]</span>
             dance like a loon
           </small>
         </h3>
@@ -75,13 +107,18 @@
       <div style="width: 100%" class="ui input ncdr-input">
         <input v-model="person.songChoice" v-on:blur="person.save()" v-bind:class="{ blue: person.songChoice.length }" type="text" placeholder="Africa, Toto">
       </div>
+      <div class="row">
+        <div class="second-page flex-container">
+          <small v-if="person.songChosen">Niiiice</small>
+        </div>
+      </div>
     </div>
     <div class="row">
-      <h2 v-if="person.rsvpChoice && person.songChoice && person.foodChoice">
-        <span v-if="person.plusOne">
+      <h2 v-if="person.complete">
+        <span v-if="person.primary">
           Great: you're done
         </span>
-        <span v-if="!person.plusOne">
+        <span v-if="!person.primary">
           Great: [[ person.user.first_name ]]'s done
         </span>
       </h2>
