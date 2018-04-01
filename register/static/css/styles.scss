@@ -74,6 +74,8 @@ img.second-page{
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
   border: 15px solid white;
+  max-width: 100%;
+  height: auto;
 }
 
 .second-page.flex-container{
@@ -94,6 +96,21 @@ img.second-page{
 
 #vue-container{
   margin-top: 54px;
+}
+
+.header-tick{
+  margin-top: -21px;
+  color: white;
+
+  p{
+    font-size: 30px;
+  }
+}
+
+.row.form-header{
+  margin-top: 10px;
+  text-align: left;
+  margin-bottom: 5px;
 }
 
 button.button-container:hover{

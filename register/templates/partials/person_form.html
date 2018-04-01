@@ -15,7 +15,7 @@
         </h1>
       </div>
     </div>
-    <div style="text-align: left; margin-bottom: 5px;" class="row">
+    <div class="row form-header">
       <h3 class="sub-header">
         RSVP
       </h3>
@@ -35,7 +35,7 @@
   </div>
   <div v-if="person.rsvpChoice === RSVP_CHOICES.YES">
     <div class="ui inverted vertical segment">
-      <div style="margin-top: 10px; text-align: left; margin-bottom: 5px;" class="row">
+      <div style="margin-top: 10px;" class="row form-header">
         <h3 class="sub-header">
           Food preferences
         </h3>
@@ -62,27 +62,29 @@
       </div>
     </div>
     <div class="ui inverted vertical segment">
-      <div style="margin-top: 10px; text-align: left; margin-bottom: 5px;" class="row">
+      <div style="margin-top: 10px;" class="row form-header">
         <h3 class="sub-header">
-          Song choice
-          <small>Name a track that will make you dance like a loon</small>
+          <div>Song choice</div>
+          <small>Name a track that will make
+            <span v-if="person.plusOne">you</span>
+            <span v-if="!person.plusOne">[[ person.user.first_name ]]</span>
+            dance like a loon
+          </small>
         </h3>
       </div>
       <div style="width: 100%" class="ui input ncdr-input">
         <input v-model="person.songChoice" v-on:blur="person.save()" v-bind:class="{ blue: person.songChoice.length }" type="text" placeholder="Africa, Toto">
       </div>
     </div>
-    <div v-if="person.plusOne" class="ui inverted vertical segment">
-      <div style="margin-top: 10px; text-align: left; margin-bottom: 5px;" class="row">
-        <h3 class="sub-header">
-          Would you like to RSVP for [[ person.plusOne.user.first_name ]]?
-        </h3>
-      </div>
-
-      <div class="second-page flex-container">
-        <button v-bind:class="{ blue: person.showOther }" v-on:click="person.showOther = true" class="half ui grey basic button fixed button-container">Oo yes please</button>
-        <button v-on:click="person.showOther = false" class="half ui grey basic button fixed button-container">Nah they can do it themeselves</button>
-      </div>
+    <div class="row">
+      <h2 v-if="person.rsvpChoice && person.songChoice && person.foodChoice">
+        <span v-if="person.plusOne">
+          Great: you're done
+        </span>
+        <span v-if="!person.plusOne">
+          Great: [[ person.user.first_name ]]'s done
+        </span>
+      </h2>
     </div>
   </div>
 </div>
