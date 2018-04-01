@@ -10,6 +10,10 @@ from register import serializers
 class Login(RedirectView):
     url = reverse_lazy("home")
 
+
+class Logout(RedirectView):
+    url = reverse_lazy("home")
+
     def get(self, *args, **kwargs):
         logout(self.request)
         return super().get(*args, **kwargs)
