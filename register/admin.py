@@ -8,6 +8,7 @@ class InvitationDetailsAdmin(admin.ModelAdmin):
 
     list_display = [
         'username',
+        'plus_one',
         'rsvp_choice',
         'invite_sent',
         'visited',
@@ -19,6 +20,9 @@ class InvitationDetailsAdmin(admin.ModelAdmin):
 
     def username(self, obj):
         return obj.user.username
+
+    def plus_one(self, obj):
+        return obj.plus_one.username
 
     def send_invite(self, request, queryset):
         for invitation_details in queryset:

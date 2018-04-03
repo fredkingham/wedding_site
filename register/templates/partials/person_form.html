@@ -137,7 +137,12 @@
     <div class="row">
       <h2 v-if="person.complete">
         <span v-if="person.primary">
-          Great! See you on 1 September.
+          <span v-if="!person.plusOne">
+            Great! See you on 1 September.
+          </span>
+          <span v-if="person.plusOne">
+            Great! RSVP for [[ person.plusOne.user.first_name ]]
+          </span>
         </span>
         <span v-if="!person.primary">
           Great: [[ person.user.first_name ]]'s done.
