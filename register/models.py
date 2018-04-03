@@ -43,7 +43,7 @@ class InvitationDetails(models.Model):
     @transaction.atomic
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        if not self.id and self.plus_one:
+        if self.plus_one:
             po = self.plus_one.invitation_details.plus_one
             if po:
                 if not po == self.user:

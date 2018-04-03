@@ -19,26 +19,35 @@ def process_row(csv_row):
     email = csv_row[EMAIL_ADDRESS].strip()
 
     if email == "???" or email == "????":
-        return
+        email = "unknown@gmail.com"
+        username = "{}{}".format(
+            csv_row[FIRST_NAME].strip().lower(),
+            csv_row[SECOND_NAME].strip().lower()
+        )
+    else:
+        username = email
 
     user, _ = User.objects.get_or_create(
         email=email,
-        username=email
+        username=username
     )
+    if user.invitation_details.invite_sent:
+        return
+
     user.first_name = csv_row[FIRST_NAME].strip()
     user.last_name = csv_row[SECOND_NAME].strip()
     user.save()
 
     plus_one = csv_row.get(PLUS_ONE, "").strip()
     if plus_one and not plus_one == "???" and not plus_one == "????":
-        plus_one_user, _ = User.objects.get_or_create(
-            email=plus_one,
+        plus_one_user = User.objects.filter(
             username=plus_one
-        )
+        ).first()
 
-        invitationdetails = user.invitation_details
-        invitationdetails.plus_one = plus_one_user
-        invitationdetails.save()
+        if plus_one_user:
+            invitationdetails = user.invitation_details
+            invitationdetails.plus_one = plus_one_user
+            invitationdetails.save()
 
 
 class Command(BaseCommand):
