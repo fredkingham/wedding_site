@@ -53,7 +53,6 @@ def process_row(csv_row):
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        User.objects.filter(is_superuser=False).delete()
         all_invitation_files = [
             i for i in os.listdir(INVIATION_FILE_DIR) if i.endswith(".csv")
         ]
